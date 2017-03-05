@@ -1,0 +1,91 @@
+{% load staticfiles %}
+{% csrf_token %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no, email=no" />
+	<meta name="author" content="eyeball">
+	<title>hello</title>
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+	{% include 'base/header.html' %}
+		<div class="main-header-img">
+			<div class="sub-header-img">
+				<p>anounce</p>
+			</div>
+		</div>
+
+	</div>
+	<section>
+		<div class="list">
+			<div id="list">
+				
+			</div>
+			<div id="button">
+				<input type="button" id="listButton" value="more">
+			</div>
+		</div>
+	</section>
+
+	{% include 'base/footer.html' %}
+
+</body>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script type="text/javascript">
+	
+	get_list();
+	function get_list(){
+		var count = 0;
+		$("#listButton").click(function(){
+			$.ajax({
+			
+				type: "POST",
+				url: "/anounce/get_list",
+				data: "data",
+				dataType: "json",
+				processData: false,
+				contentType: false,
+				success: function(data){
+					var result = data.result;
+					if (count >= 10){
+						alert("리스트가 존재하지 않습니다.");
+					}
+					else{
+						$("#list").append("<div class='get_list' id="+result[9-count]['id']+"><p>TITLE : "+result[9-count]['title']+"</p><p>작성자 : "+result[9-count]['author']+"</p><p>날짜 : "+result[9-count]['published']+"</p></div>");
+							count += 1;
+					}
+					//count += 1;
+					//$("#list").html("");
+					//for(i=0; i<count; i++){
+					//	$("#list").append("<div class='get_list' id="+result[i]['id']+"><p>TITLE : "+result[i]['title']+"</p><p>작성자 : "+result[i]['author']+"</p><p>날짜 : "+result[i]['published']+"</p></div>");
+					//}
+					//alert(count);
+					// alert(result[0]['title']);
+				}
+			});
+		})
+	}
+	
+	$(document).on("click",".get_list",function(){	
+		var id = $(this).attr("id");
+		location.href = ("/anounce/detail_list/"+id);
+		$.ajax({
+			
+			type: "POST",
+			url: "/anounce/detail_list/"+id,
+			data: "data",
+			dataType: "json",
+			processData: false,
+			contentType: false,
+			success: function(data){
+				var result = data.result;
+				alert(result[0]['context']);
+				count += 1;
+			}
+		});
+
+	});
+</script>
+</html>

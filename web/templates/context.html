@@ -1,0 +1,38 @@
+{% load staticfiles %}
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no, email=no" />
+	<meta name="author" content="eyeball">
+	<title>hello</title>
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+	{% include 'base/header.html' %}
+	<section>
+		<div class="intro">
+			<div class="main-default">
+				<img width="480px" height="260px" src="{% static 'images/51.jpg' %}">
+			</div>
+			<div class="main-default">
+				 <p>hello haha</p> 
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="history">
+			<div class="main-default">
+				<p>welcome</p>
+			</div>
+			<div class="main-default">
+				<img width="480px" height="260px" src="{% static 'images/51.jpg' %}">
+			</div>
+		</div>
+	</section>
+
+	{% include 'base/footer.html' %}
+
+</body>
+</html>

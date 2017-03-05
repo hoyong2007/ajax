@@ -1,0 +1,55 @@
+{% load staticfiles %}
+{% csrf_token %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no, email=no" />
+	<meta name="author" content="eyeball">
+	<title>hello</title>
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+	{% include 'base/header.html' %}
+		<div class="main-header-img">
+			<div class="sub-header-img">
+				<p>anounce</p>
+			</div>
+		</div>
+
+	</div>
+	<section>
+		<div class="list">
+			<div id="list">
+					 
+			</div>
+		</div>
+	</section>
+
+	{% include 'base/footer.html' %}
+
+</body>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script type="text/javascript">
+	
+	get_list();
+	function get_list(){	
+		var count = {{ num }};		
+		$.ajax({
+			
+			type: "POST",
+			url: "/anounce/get_context/"+count,
+			data: "data",
+			dataType: "json",
+			processData: false,
+			contentType: false,
+			success: function(data){
+				var result = data.result;
+				$("#list").append("<div class='get_list' id="+result[0]['id']+"><p>TITLE : "+result[0]['title']+"</p><p>작성자 : "+result[0]['author']+"</p><p>내용 : "+result[0]['context']+"</p><p>날짜 : "+result[0]['published']+"</p></div>");					
+				//$("#list").append("<div class='get_list' id="+result[9-count]['id']+"><p>TITLE : "+result[9-count]['title']+"</p><p>작성자 : "+result[9-count]['author']+"</p><p>내용 : "+result[9-count]['context']+"</p><p>날짜 : "+result[9-count]['published']+"</p></div>");
+			}
+		});
+	}
+	
+</script>
+</html>

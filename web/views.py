@@ -26,3 +26,5 @@ def get_context(request, num):
 	context = Anounce.objects.filter(id=num).values()
 	return JsonResponse({"result":list(context)})
 
+def contact(request):
+	return render(request, 'contact.html', {})
